@@ -10,7 +10,7 @@ const draw = () => {
     // Valeurs positions pacman
     let pacmanX = 13;
     let pacmanY = 190;
-    let pacmanR = 13; // rayon pacman
+    let pacmanR = 18; // rayon pacman
     let mousePacman = 30;
     let angleBegin = mousePacman; // angle de début du cercle
     let angleEnd = 360 - mousePacman; // angle de fin du cercle
@@ -94,13 +94,13 @@ const draw = () => {
     };
 
     const wallTrap = () => {
-      context.lineWidth = "15";
+      context.lineWidth = "20";
       // Obstacle en haut à gauche
       context.beginPath();
       context.moveTo(150, 0);
       context.lineTo(150, 60);
       context.stroke();
-
+      context.lineWidth = "15";
       // Obstacle en haut à droite
       context.beginPath();
       context.moveTo(450, 0);
@@ -132,7 +132,7 @@ const draw = () => {
     // Obstacle en haut à gauche
     const obstacleTopLeft = () => {
       context.beginPath();
-      context.lineWidth = "5";
+      context.lineWidth = "25";
       context.moveTo(80, 70);
       context.lineTo(80, 120);
       context.stroke();
@@ -140,7 +140,7 @@ const draw = () => {
     // Obstacle en bas à gauche
     const obstacleBottomLeft = () => {
       context.beginPath();
-      context.lineWidth = "20";
+      context.lineWidth = "25";
       context.moveTo(70, 280);
       context.lineTo(130, 280);
       context.lineTo(130, 230);
@@ -149,7 +149,7 @@ const draw = () => {
     // Obstacle en haut à droite
     const obstacleTopRight = () => {
       context.beginPath();
-      context.lineWidth = "8";
+      context.lineWidth = "25";
       context.moveTo(520, 70);
       context.lineTo(520, 120);
       context.stroke();
@@ -158,7 +158,7 @@ const draw = () => {
     // Obstacle en haut au centre
     const obstacleTop = () => {
       context.beginPath();
-      context.lineWidth = "15";
+      context.lineWidth = "25";
       context.moveTo(220, 70);
       context.lineTo(380, 70);
       context.stroke();
@@ -167,7 +167,7 @@ const draw = () => {
     // Obstacle en bas au centre
     const obstacleBottom = () => {
       context.beginPath();
-      context.lineWidth = "15";
+      context.lineWidth = "25";
       context.moveTo(220, 300);
       context.lineTo(380, 300);
       context.stroke();
@@ -176,7 +176,7 @@ const draw = () => {
     // Obstacle en bas à droite
     const obstacleTBottomRight = () => {
       context.beginPath();
-      context.lineWidth = "6";
+      context.lineWidth = "25";
       context.moveTo(520, 280);
       context.lineTo(520, 340);
       context.stroke();
