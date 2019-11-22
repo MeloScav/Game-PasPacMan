@@ -6,6 +6,8 @@ const draw = () => {
     let leftPressed = false;
     let UpPressed = false;
     let DownPressed = false;
+    let pacmanX = 13;
+    let pacmanY = 190;
 
     // Evènement pour quand la touche est enfoncée
     document.addEventListener(
@@ -65,14 +67,14 @@ const draw = () => {
       context.fill();
     };
 
-    const pacMan = (x, y, r) => {
+    const pacMan = (pacmanX, pacmanY, r) => {
       context.beginPath();
       context.fillStyle = "rgb(235, 233, 0)";
-      context.moveTo(x, y);
-      context.arc(x, y, r, Math.PI / 7, -Math.PI / 7, false);
-      context.lineTo(x, y);
+      context.moveTo(pacmanX, pacmanY);
+      context.arc(pacmanX, pacmanY, r, Math.PI / 7, -Math.PI / 7, false);
+      context.lineTo(pacmanX, pacmanY);
       context.fill();
-      eyesPacMan(x, y);
+      eyesPacMan(pacmanX, pacmanY);
     };
 
     const wallTrap = () => {
@@ -328,6 +330,7 @@ const draw = () => {
 
     // Dessiner le tout
     const drawCanvas = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
       borderCanvas();
       wallTrap();
       obstacleTopLeft();
@@ -339,10 +342,25 @@ const draw = () => {
       ghostDraw(260, 170, "rgb(214, 123, 166)");
       ghostDraw(305, 170, "rgb(189, 0, 14)");
       ghostDraw(350, 170, "rgb(1, 237, 235)");
-      pacMan(13, 190, 13);
+      pacMan(pacmanX, pacmanY, 13);
       points();
+
+      if (rightPressed) {
+        pacmanX += 7;
+      } else if (leftPressed) {
+        pacmanX -= 7;
+      }
+
+      if (UpPressed) {
+        pacmanY -= 7;
+      } else if (DownPressed) {
+        pacmanY += 7;
+      }
+
+      requestAnimationFrame(drawCanvas);
     };
     drawCanvas();
   }
 };
+
 draw();
