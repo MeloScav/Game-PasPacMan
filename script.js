@@ -2,6 +2,43 @@ const draw = () => {
   const canvas = document.getElementById("canevas");
   if (canvas.getContext) {
     const context = canvas.getContext("2d");
+    let rightPressed = false;
+    let leftPressed = false;
+    let UpPressed = false;
+    let DownPressed = false;
+
+    // Evènement pour quand la touche est enfoncée
+    document.addEventListener(
+      "keydown",
+      e => {
+        if (e.key == "Right" || e.key == "ArrowRight") {
+          rightPressed = true;
+        } else if (e.key == "Left" || e.key == "ArrowLeft") {
+          leftPressed = true;
+        } else if (e.key == "Up" || e.key == "ArrowUp") {
+          UpPressed = true;
+        } else if (e.key == "Down" || e.key == "ArrowDown") {
+          DownPressed = true;
+        }
+      },
+      false
+    );
+    // Evènement pour quand la touche est relachée
+    document.addEventListener(
+      "keyup",
+      e => {
+        if (e.key == "Right" || e.key == "ArrowRight") {
+          rightPressed = false;
+        } else if (e.key == "Left" || e.key == "ArrowLeft") {
+          leftPressed = false;
+        } else if (e.key == "Up" || e.key == "ArrowUp") {
+          UpPressed = false;
+        } else if (e.key == "Down" || e.key == "ArrowDown") {
+          DownPressed = false;
+        }
+      },
+      false
+    );
 
     const borderCanvas = () => {
       context.lineWidth = "30";
@@ -290,7 +327,7 @@ const draw = () => {
     };
 
     // Dessiner le tout
-    const draw = () => {
+    const drawCanvas = () => {
       borderCanvas();
       wallTrap();
       obstacleTopLeft();
@@ -305,6 +342,7 @@ const draw = () => {
       pacMan(13, 190, 13);
       points();
     };
-    draw();
+    drawCanvas();
   }
 };
+draw();
