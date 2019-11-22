@@ -2,12 +2,21 @@ const draw = () => {
   const canvas = document.getElementById("canevas");
   if (canvas.getContext) {
     const context = canvas.getContext("2d");
+    // Les touches à faux car non enfoncées de base
     let rightPressed = false;
     let leftPressed = false;
     let UpPressed = false;
     let DownPressed = false;
+    // Valeurs positions pacman
     let pacmanX = 13;
     let pacmanY = 190;
+    let pacmanR = 13; // rayon pacman
+    let mousePacman = 30;
+    let angleBegin = mousePacman; // angle de début du cercle
+    let angleEnd = 360 - mousePacman; // angle de fin du cercle
+    let booleanPacman = false; // sens de dessin du cercle
+    let testX = 0;
+    let testY = 0;
 
     // Evènement pour quand la touche est enfoncée
     document.addEventListener(
@@ -67,14 +76,21 @@ const draw = () => {
       context.fill();
     };
 
-    const pacMan = (pacmanX, pacmanY, r) => {
+    const pacMan = (pacmanX, pacmanY, pacmanR, angleB, angleE, booleanP) => {
       context.beginPath();
       context.fillStyle = "rgb(235, 233, 0)";
       context.moveTo(pacmanX, pacmanY);
-      context.arc(pacmanX, pacmanY, r, Math.PI / 7, -Math.PI / 7, false);
+      context.arc(
+        pacmanX,
+        pacmanY,
+        pacmanR,
+        (Math.PI / 180) * angleB,
+        (Math.PI / 180) * angleE,
+        booleanP
+      );
       context.lineTo(pacmanX, pacmanY);
       context.fill();
-      eyesPacMan(pacmanX, pacmanY);
+      eyesPacMan(pacmanX - testX, pacmanY + testY);
     };
 
     const wallTrap = () => {
@@ -342,19 +358,58 @@ const draw = () => {
       ghostDraw(260, 170, "rgb(214, 123, 166)");
       ghostDraw(305, 170, "rgb(189, 0, 14)");
       ghostDraw(350, 170, "rgb(1, 237, 235)");
-      pacMan(pacmanX, pacmanY, 13);
       points();
+      pacMan(pacmanX, pacmanY, pacmanR, angleBegin, angleEnd, booleanPacman);
 
       if (rightPressed) {
-        pacmanX += 7;
+        pacmanX += 7; //On avance
+        // On change remet les valeurs de bases
+        angleBegin = mousePacman;
+        angleEnd = 360 - mousePacman;
+        booleanPacman = false;
+        // EYES
+        testX = 0;
+        testY = 0;
+        if (pacmanX + pacmanR > canvas.width) {
+          pacmanX = canvas.width - pacmanR - 10;
+        }
       } else if (leftPressed) {
         pacmanX -= 7;
+        // On change le pacman de sens
+        angleBegin = 179 - mousePacman;
+        angleEnd = 180 + mousePacman;
+        booleanPacman = true;
+
+        if (pacmanX < 13) {
+          pacmanX = 15;
+        }
       }
 
       if (UpPressed) {
         pacmanY -= 7;
+        // On change le pacman de sens
+        angleBegin = 269 - mousePacman;
+        angleEnd = 270 + mousePacman;
+        booleanPacman = true;
+        // EYES
+        testX = 5;
+        testY = 5;
+
+        if (pacmanY < 25) {
+          pacmanY = 25;
+        }
       } else if (DownPressed) {
         pacmanY += 7;
+        // On change le pacman de sens
+        angleBegin = 79 - mousePacman;
+        angleEnd = 90 + mousePacman;
+        booleanPacman = true;
+        // EYES
+        testX = 5;
+        testY = 5;
+        if (pacmanY + pacmanR > canvas.height) {
+          pacmanY = canvas.height - pacmanR - 15;
+        }
       }
 
       requestAnimationFrame(drawCanvas);
