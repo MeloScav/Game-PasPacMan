@@ -15,8 +15,8 @@ const draw = () => {
     let angleBegin = mousePacman; // angle de début du cercle
     let angleEnd = 360 - mousePacman; // angle de fin du cercle
     let booleanPacman = false; // sens de dessin du cercle
-    let testX = 0;
-    let testY = 0;
+    let eyesX = 0;
+    let eyesY = 0;
 
     // Evènement pour quand la touche est enfoncée
     document.addEventListener(
@@ -90,7 +90,7 @@ const draw = () => {
       );
       context.lineTo(pacmanX, pacmanY);
       context.fill();
-      eyesPacMan(pacmanX - testX, pacmanY + testY);
+      eyesPacMan(pacmanX - eyesX, pacmanY + eyesY);
     };
 
     const wallTrap = () => {
@@ -368,10 +368,18 @@ const draw = () => {
         angleEnd = 360 - mousePacman;
         booleanPacman = false;
         // EYES
-        testX = 0;
-        testY = 0;
+        eyesX = 0;
+        eyesY = 0;
+        // Il ne passe pas le mur
         if (pacmanX + pacmanR > canvas.width) {
-          pacmanX = canvas.width - pacmanR - 10;
+          if (pacmanY < 170 || pacmanY > 210) {
+            pacmanX = canvas.width - pacmanR - 10;
+          }
+          // S'il passe dans le trou, il arrive de l'autre côté
+          else if (pacmanY >= 170 && pacmanY <= 210) {
+            pacmanX = 15;
+            pacmanY = 190;
+          }
         }
       } else if (leftPressed) {
         pacmanX -= 7;
@@ -379,9 +387,19 @@ const draw = () => {
         angleBegin = 179 - mousePacman;
         angleEnd = 180 + mousePacman;
         booleanPacman = true;
-
+        // EYES
+        eyesX = 0;
+        eyesY = 0;
+        // Il ne passe pas le mur
         if (pacmanX < 13) {
-          pacmanX = 15;
+          if (pacmanY < 170 || pacmanY > 210) {
+            pacmanX = 15;
+          }
+          // S'il passe dans le trou, il arrive de l'autre côté
+          else if (pacmanY >= 170 && pacmanY <= 210) {
+            pacmanX = 590;
+            pacmanY = 190;
+          }
         }
       }
 
@@ -392,8 +410,8 @@ const draw = () => {
         angleEnd = 270 + mousePacman;
         booleanPacman = true;
         // EYES
-        testX = 5;
-        testY = 5;
+        eyesX = 5;
+        eyesY = 5;
 
         if (pacmanY < 25) {
           pacmanY = 25;
@@ -405,8 +423,8 @@ const draw = () => {
         angleEnd = 90 + mousePacman;
         booleanPacman = true;
         // EYES
-        testX = 5;
-        testY = 5;
+        eyesX = 5;
+        eyesY = 5;
         if (pacmanY + pacmanR > canvas.height) {
           pacmanY = canvas.height - pacmanR - 15;
         }
