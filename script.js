@@ -381,6 +381,12 @@ const draw = () => {
             pacmanY = 190;
           }
         }
+        // Premier obstacle contre le mur (haut droite)
+        else if (pacmanX + pacmanR > 150 && pacmanX + pacmanR < 180) {
+          if (pacmanY <= 60) {
+            pacmanX = 110;
+          }
+        }
       } else if (leftPressed) {
         pacmanX -= 7;
         // On change le pacman de sens
@@ -393,12 +399,18 @@ const draw = () => {
         // Il ne passe pas le mur
         if (pacmanX < 13) {
           if (pacmanY < 170 || pacmanY > 210) {
-            pacmanX = 15;
+            pacmanX = 26;
           }
           // S'il passe dans le trou, il arrive de l'autre côté
           else if (pacmanY >= 170 && pacmanY <= 210) {
             pacmanX = 590;
             pacmanY = 190;
+          }
+        }
+        // Premier obstacle contre le mur (haut droite)
+        else if (pacmanX < 180 && pacmanX > 160) {
+          if (pacmanY <= 60) {
+            pacmanX = 180;
           }
         }
       }
@@ -415,6 +427,12 @@ const draw = () => {
 
         if (pacmanY < 25) {
           pacmanY = 25;
+        }
+        // Premier obstacle contre le mur (haut droite)
+        else if (pacmanY <= 60) {
+          if (pacmanX + pacmanR >= 140 && pacmanX <= 175) {
+            pacmanY = 80;
+          }
         }
       } else if (DownPressed) {
         pacmanY += 7;
